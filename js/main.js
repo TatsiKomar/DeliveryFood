@@ -19,13 +19,25 @@ const cardsMenu = document.querySelector('.cards-menu');
 
 let login = localStorage.getItem('gloDelivery');
 
-function toggleModal() {
+const valid = function(str) {
+  const nameReg = /^[a-zA-Z][a-zA-Z0-9-_\.]{1,20}$/;
+
+  return nameReg.test(str);
+}
+
+function toggleModal () {
   modal.classList.toggle("is-open");
 }
 
 function toggleModalAuth() {
-  loginInput.style.borderColor = '';
   modalAuth.classList.toggle('is-open');
+  loginInput.style.borderColor = '';
+}
+
+function returnMain() {
+  containerPromo.classList.remove('hide');
+  restaurants.classList.remove('hide');
+  menu.classList.add('hide');
 }
 
 function autorized() {
@@ -39,6 +51,7 @@ function autorized() {
     buttonAuth.style.display = '';
     buttonOut.removeEventListener('click', logOut);
     checkAuth();
+    returnMain();
   }
 
   userName.textContent = login;
@@ -58,7 +71,7 @@ function notAuthorized() {
   function logIn(event) {
     event.preventDefault();
 
-    if (maskInput(loginInput.value)) {
+    if (valid(loginInput.value)) {
       login = loginInput.value;
       localStorage.setItem('gloDelivery', login);
       toggleModalAuth();
@@ -69,6 +82,7 @@ function notAuthorized() {
       checkAuth();
     } else {
       loginInput.style.borderColor = 'tomato';
+      loginInput.value = '';
     }
   }
   buttonAuth.addEventListener('click', toggleModalAuth);
@@ -140,14 +154,19 @@ function openGoods(event) {
   const restaurant = target.closest('.card-restaurant');
 
   if (restaurant){
-    cardsMenu.textContent = '';
-    containerPromo.classList.add('hide');
-    restaurants.classList.add('hide');
-    menu.classList.remove('hide');
 
-    createCardGood();
-    createCardGood();
-    createCardGood();
+    if (login) {
+
+        cardsMenu.textContent = '';
+        containerPromo.classList.add('hide');
+        restaurants.classList.add('hide');
+        menu.classList.remove('hide');
+        createCardGood();
+        createCardGood();
+        createCardGood();
+    } else {
+      toggleModalAuth();
+    }
   }
 }
 
@@ -168,3 +187,12 @@ checkAuth();
 createCardRestaurant();
 createCardRestaurant();
 createCardRestaurant();
+
+new Swiper('.container-promo', {
+  loop:true,
+  autoplay: {
+    delay: 3000,
+  },
+  sliderPerView: 1,
+  slidesPerColumn: 1,
+})
