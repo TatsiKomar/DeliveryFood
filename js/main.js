@@ -1,13 +1,13 @@
 'use strict';
 
-const cartButton = document.getElementById("#cart-button");
+const cartButton = document.getElementById("cart-button");
 const modal = document.querySelector(".modal");
 const close = document.querySelector(".close");
 const buttonAuth = document.querySelector('.button-auth');
 const modalAuth = document.querySelector('.modal-auth');
 const closeAuth = document.querySelector('.close-auth');
-const logInForm = document.getElementById('#logInForm');
-const loginInput = document.getElementById('#login');
+const logInForm = document.getElementById('logInForm');
+const loginInput = document.getElementById('login');
 const userName = document.querySelector('.user-name');
 const buttonOut = document.querySelector('.button-out');
 const cardsRestaurants = document.querySelector('.cards-restaurants');
@@ -120,7 +120,7 @@ function createCardRestaurant({ image, kitchen,
   time_of_delivery: timeOfDelivery }) {
 
   const card = document.createElement('a');
-  card.className.add('card-resraurant');
+  card.className = 'card-resraurant';
   card.products = products;
   card.info = [name, price, stars, kitchen];
  
@@ -191,7 +191,7 @@ function openGoods(event) {
       category.textContent = kitchen;
 
       getData(`./db/${restaurant.products}`).then(function(data) {
-      data.forEach(createCardGood())
+      data.forEach(createCardGood)
       });
     }
   } else {
@@ -269,7 +269,7 @@ function changeCount(event) {
 
 function init() {
   getData('./db/partners.json').then(function(data) {
-    data.forEach(createCardRestaurant())
+    data.forEach(createCardRestaurant)
   });
   
   cartButton.addEventListener('click', function(){
